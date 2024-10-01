@@ -1,0 +1,28 @@
+{
+  "name": "gp-site",
+  "version": "1.0.0",
+  "description": "E-commerce and institutional website for GP Gomes Fogões using Next.js",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^13.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "^4.0.0",
+    "tailwindcss": "^3.0.0",
+    "postcss": "^8.0.0",
+    "autoprefixer": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/node": "^18.0.0"
+  },
+  "author": "Patrícia Rufino Dias",
+  "license": "MIT"
+}
+

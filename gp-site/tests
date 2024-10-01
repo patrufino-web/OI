@@ -1,0 +1,72 @@
+// Install necessary testing libraries
+// npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event
+
+// jest.config.js
+module.exports = {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/gp-site/$1',
+  },
+};
+
+// jest.setup.js
+import '@testing-library/jest-dom';
+
+// tests/components/shared/Navbar.test.tsx
+import { render, screen } from '@testing-library/react';
+import Navbar from '@/components/shared/Navbar';
+
+describe('Navbar Component', () => {
+  it('renders the navigation links', () => {
+    render(<Navbar />);
+    expect(screen.getByText(/Home/i)).toBeInTheDocument();
+    expect(screen.getByText(/About/i)).toBeInTheDocument();
+    expect(screen.getByText(/Contact/i)).toBeInTheDocument();
+  });
+});
+
+// tests/app/HomePage.test.tsx
+import { render, screen } from '@testing-library/react';
+import HomePage from '@/app/page';
+
+describe('HomePage', () => {
+  it('renders the hero section', () => {
+    render(<HomePage />);
+    expect(screen.getByText(/Welcome to GP Gomes Fogões/i)).toBeInTheDocument();
+  });
+
+  it('displays featured products', () => {
+    render(<HomePage />);
+    expect(screen.getByText(/Featured Products/i)).toBeInTheDocument();
+  });
+});
+
+// tests/hooks/useCart.test.ts
+import { renderHook, act } from '@testing-library/react-hooks';
+import useCart from '@/hooks/useCart';
+
+describe('useCart Hook', () => {
+  it('adds an item to the cart', () => {
+    const { result } = renderHook(() => useCart());
+
+    act(() => {
+      result.current.addItem({ id: '1', name: 'Product 1', price: 100 });
+    });
+
+    expect(result.current.cartItems).toHaveLength(1);
+    expect(result.current.cartItems[0].name).toBe('Product 1');
+  });
+
+  it('removes an item from the cart', () => {
+    const { result } = renderHook(() => useCart());
+
+    act(() => {
+      result.current.addItem({ id: '1', name: 'Product 1', price: 100 });
+      result.current.removeItem('1');
+    });
+
+    expect(result.current.cartItems).toHaveLength(0);
+  });
+});
+
